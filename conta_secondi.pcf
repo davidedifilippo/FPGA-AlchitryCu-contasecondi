@@ -1,14 +1,13 @@
 # Segnali d'ingresso
 
 set_io clk P7
-set_io segment_out[0] M1
-set_io segment_out[1] L1
-set_io segment_out[2] K4
-set_io segment_out[3] K3
-set_io segment_out[4] N1
-set_io segment_out[5] J3 
-set_io segment_out[6] J1
-
+set_io segment_out[0] M1 #G
+set_io segment_out[1] L1 #F
+set_io segment_out[2] K3 #E
+set_io segment_out[3] K4 #D
+set_io segment_out[4] N1 #C
+set_io segment_out[5] J3 #B
+set_io segment_out[6] J1 #A
 set_io rst_n P8  # Push_button S5
 
 # Mappatura dei LED di debug
