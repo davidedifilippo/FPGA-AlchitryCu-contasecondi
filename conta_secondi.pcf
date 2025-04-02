@@ -1,0 +1,27 @@
+# Segnali d'ingresso
+
+set_io clk P7
+set_io segment_out[0] M1
+set_io segment_out[1] L1
+set_io segment_out[2] K4
+set_io segment_out[3] K3
+set_io segment_out[4] N1
+set_io segment_out[5] J3 
+set_io segment_out[6] J1
+
+set_io rst_n P8  # Push_button S5
+
+# Mappatura dei LED di debug
+# set_io debug_leds[0] E1
+# set_io debug_leds[1] D1
+# set_io debug_leds[2] C1
+# set_io debug_leds[3] B1
+# set_io debug_leds[4] D3
+# set_io debug_leds[5] C3
+# set_io debug_leds[6] A1
+# set_io debug_leds[7] A2
+
+set_io digit_sel[0] H1 #MSB
+set_io digit_sel[1] H3
+set_io digit_sel[2] G3
+set_io digit_sel[3] G1 #LSB
