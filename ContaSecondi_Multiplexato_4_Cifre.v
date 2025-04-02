@@ -69,6 +69,16 @@ module ContatoreSecondi(
 
     // 3. Conversione del conteggio in cifre BCD
 
+      reg [3:0] ms_tens_digit;
+
+    always @(posedge ms_tick or negedge rst_n) begin
+        if (!rst_n) begin
+            ms_tens_digit <= 4'b0;
+        end else begin
+            ms_tens_digit <= (milliseconds / 100) % 10;  // Centinaia di millisecondi
+        end
+    end
+
     reg [3:0] sec_unit;
     reg [3:0] sec_tens;
 
@@ -82,18 +92,17 @@ module ContatoreSecondi(
         end
     end
 
-    reg [3:0] ms_hundreds;
-    reg [3:0] ms_tens_digit;
+
+     reg [3:0] min_unit;
 
     always @(posedge ms_tick or negedge rst_n) begin
         if (!rst_n) begin
-            ms_hundreds <= 4'b0;
-            ms_tens_digit <= 4'b0;
+            min_unit <= 4'b0;
         end else begin
-            ms_hundreds <= (milliseconds / 100) % 10;   // Centinaia di millisecondi
-            ms_tens_digit <= (milliseconds / 10) % 10;  // Decine di millisecondi
+            min_unit <= minutes % 10;  // Decine di millisecondi
         end
     end
+
 
     // 4. Logica di multiplexing dei display
 
@@ -137,12 +146,12 @@ module ContatoreSecondi(
 
     reg [3:0] current_digit_bcd;
 
-    always @(digit_counter or sec_unit or sec_tens or ms_hundreds or ms_tens_digit) begin
+    always @(digit_counter or sec_unit or sec_tens or min_unit or ms_tens_digit) begin
         case (digit_counter)
-            2'b00: current_digit_bcd <= sec_unit;      // Unità dei secondi
-            2'b01: current_digit_bcd <= sec_tens;      // Decine dei secondi
-            2'b10: current_digit_bcd <= ms_tens_digit; // Decine di millisecondi
-            2'b11: current_digit_bcd <= ms_hundreds;   // Centinaia di millisecondi
+            2'b00: current_digit_bcd <= sec_tens;      
+            2'b01: current_digit_bcd <= min_unit;      
+            2'b10: current_digit_bcd <= ms_tens_digit; 
+            2'b11: current_digit_bcd <= sec_unit ;  //minuti
             default: current_digit_bcd <= 4'b0000;
         endcase
     end
@@ -152,9 +161,9 @@ module ContatoreSecondi(
             4'h0: segment_out =  7'b0000001; // 0
             4'h1: segment_out =  7'b1001111; // 1
             4'h2: segment_out =  7'b0010010; // 2
-            4'h3: segment_out =  7'b0001010; // 3
+            4'h3: segment_out =  7'b0000110; // 3
             4'h4: segment_out =  7'b1001100; // 4
-            4'h5: segment_out =  7'b0101000; // 5
+            4'h5: segment_out =  7'b0100100; // 5
             4'h6: segment_out =  7'b0100000; // 6
             4'h7: segment_out =  7'b0001111; // 7
             4'h8: segment_out =  7'b0000000; // 8
